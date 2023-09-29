@@ -1,0 +1,40 @@
+import java.util.Scanner;
+public class ceasercipher {
+    public static final String alphabet = "abcdefghijklmnopqrstuvwxyz";
+    public static String encrypt(String pt, int k) {
+        pt = pt.toLowerCase();
+        String ept = "";
+        for (int i = 0; i < pt.length(); i++) {
+            int p = alphabet.indexOf(pt.charAt(i));
+            int ep = (k + p) % 26;
+            char ch = alphabet.charAt(ep);
+            ept += ch;
+        }
+        return ept;
+    }
+    public static String decryptData(String ct, int k) {
+        ct = ct.toLowerCase();
+        String dct = "";
+        for (int i = 0; i < ct.length(); i++) {
+            int p = alphabet.indexOf(ct.charAt(i));
+            int dp = (p - k) % 26;
+            if (dp < 0) {
+                dp = alphabet.length() + dp;
+            }
+            char ch = alphabet.charAt(dp);
+            dct += ch;
+        }
+        return dct;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter plain text  ");
+        String pt = sc.nextLine();
+        System.out.println("enter shift key");
+        int k = Integer.valueOf(sc.nextLine());
+        System.out.println("encrypted plain text : " + encrypt(pt, k));
+        System.out.println("decrypted cipher text  : " + decryptData(encrypt(pt, k),
+                k));
+        sc.close();
+    }
+}
