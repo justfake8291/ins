@@ -1,0 +1,62 @@
+package mono;
+
+import java.util.*;
+
+class RailFence {
+
+    String en(String pt, int r) throws Exception {
+        int len = pt.length();
+        int c = len / r;
+        char m[][] = new char[r][c];
+        int k = 0;
+        String ct = "";
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                if (k != len) {
+                    m[j][i] = pt.charAt(k++);
+                } else {
+                    m[j][i] = 'X';
+                }
+            }
+        }
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                ct += m[i][j];
+            }
+        }
+        return ct;
+    }
+
+    String de(String ct, int r) throws Exception {
+        int len = ct.length();
+        int c = len / r;
+        char m[][] = new char[r][c];
+        int k = 0;
+        String pt = "";
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                m[i][j] = ct.charAt(k++);
+            }
+        }
+        for (int i = 0; i < c; i++) {
+            for (int j = 0; j < r; j++) {
+                pt += m[j][i];
+            }
+        }
+        return pt;
+    }
+
+    public static void main(String args[]) throws Exception {
+        RailFence rf = new RailFence();
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter plain text :");
+        String pt = s.nextLine();
+        System.out.println("Enter row :");
+        int r = s.nextInt();
+        String ct = rf.en(pt, r);
+        String dct = rf.de(ct, r);
+        System.out.println("cipher text:\n" + ct);
+        System.out.println("plain text: \n" + dct);
+        s.close();
+    }
+}
