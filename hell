@@ -1,0 +1,35 @@
+package Pr_6;
+
+import java.util.*;
+
+public class Pr_6 {
+
+    public static void main(String[] args) {
+        long P, Q, A, s, B, r, k1, k2;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter value Q & P");
+        Q = sc.nextLong();
+        P = sc.nextLong();
+        System.out.println("private k of user 1");
+        s = sc.nextLong();
+        System.out.println("private k of user 2");
+        r = sc.nextLong();
+        A = pow(Q, s, P);
+        B = pow(Q, r, P);
+        k1 = pow(B, s, P);
+        k2 = pow(A, r, P);
+        System.out.println("Secret k for User1 is:" + k1);
+        System.out.println("Secret k for User2 is:" + k2);
+        sc.close();
+    }
+
+    private static long pow(long A, long B, long P) {
+        long res;
+        if (B == 1) {
+            return A;
+        } else {
+            res = ((long) Math.pow(A, B)) % P;
+            return res;
+        }
+    }
+}
