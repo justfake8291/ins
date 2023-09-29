@@ -1,0 +1,43 @@
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.util.Base64;
+import java.util.Scanner;
+
+public class PR4A {
+
+    private Cipher encryptCipher;
+    private Cipher decryptCipher;
+
+    public PR4A(SecretKey key) throws Exception {
+        encryptCipher = Cipher.getInstance("AES");
+        decryptCipher = Cipher.getInstance("AES");
+        encryptCipher.init(Cipher.ENCRYPT_MODE, key);
+        decryptCipher.init(Cipher.DECRYPT_MODE, key);
+    }
+
+    public String encrypt(String plaintext) throws Exception {
+        byte[] utf8 = plaintext.getBytes("UTF-8");
+        byte[] encrypted = encryptCipher.doFinal(utf8);
+        return Base64.getEncoder().encodeToString(encrypted);
+    }
+
+    public String decrypt(String ciphertext) throws Exception {
+        byte[] decoded = Base64.getDecoder().decode(ciphertext);
+        byte[] utf8 = decryptCipher.doFinal(decoded);
+        return new String(utf8, "UTF-8");
+    }
+
+    public static void main(String[] args) throws Exception {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the plaintext: ");
+        String plaintext = scanner.nextLine();
+        SecretKey key = KeyGenerator.getInstance("AES").generateKey();
+        PR4A pr4a = new PR4A(key);
+        String ciphertext = pr4a.encrypt(plaintext);
+        System.out.println("Encrypted Text: " + ciphertext);
+        String decryptedText = pr4a.decrypt(ciphertext);
+        System.out.println("Decrypted Text: " + decryptedText);
+        scanner.close();
+    }
+}
