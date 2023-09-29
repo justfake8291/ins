@@ -1,0 +1,54 @@
+package mono;
+import java.util.Scanner;
+
+public class vernam {
+
+    public static String encrypt(String pt, String k) {
+        String ept = "";
+        int cipher[] = new int[k.length()];
+        for (int i = 0; i < k.length(); i++) {
+            cipher[i] = pt.charAt(i) - 'A' + k.charAt(i) - 'A';
+        }
+        for (int i = 0; i < k.length(); i++) {
+            if (cipher[i] > 25) {
+                cipher[i] = cipher[i] - 26;
+            }
+        }
+        for (int i = 0; i < k.length(); i++) {
+            int pos = cipher[i] + 'A';
+            ept += (char) pos;
+        }
+        return ept;
+    }
+
+    public static String decrypt(String s, String k) {
+        String pt = "";
+        int plain[] = new int[k.length()];
+        for (int i = 0; i < k.length(); i++) {
+            plain[i] = s.charAt(i) - 'A'
+                    - (k.charAt(i) - 'A');
+        }
+        for (int i = 0; i < k.length(); i++) {
+            if (plain[i] < 0) {
+                plain[i] = plain[i] + 26;
+            }
+        }
+        for (int i = 0; i < k.length(); i++) {
+            int pos = plain[i] + 'A';
+            pt += (char) pos;
+        }
+        return pt;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter plain text");
+        String pt = sc.nextLine();
+        System.out.println("enter key");
+        String k = sc.nextLine();
+        String ept = encrypt(pt.toUpperCase(), k.toUpperCase());
+        System.out.println("encrypted plain text :" + ept);
+        System.out.println("decrypted cipher text :"
+                + decrypt(ept, k.toUpperCase()));
+    }
+}
